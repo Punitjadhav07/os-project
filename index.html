@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Queue Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body class="light-mode">
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" class="theme-switch">
+        <label for="theme-switch" class="theme-switch-label">
+            <span class="theme-switch-icon"></span>
+        </label>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+                <h1>Smart Queue</h1>
+            </div>
+            <p class="tagline">Efficient. Organized. Intelligent.</p>
+        </header>
+
+        <main>
+            <section class="user-panel card">
+                <h2><span class="icon">👤</span> Join the Queue</h2>
+                <form id="queue-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Type</label>
+                        <select id="service" required>
+                            <option value="general">General Inquiry</option>
+                            <option value="deposit">Deposit/Withdrawal</option>
+                            <option value="account">Account Services</option>
+                            <option value="loan">Loan Application</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="priority" name="priority">
+                        <label for="priority">Priority Service</label>
+                    </div>
+                    <button type="submit" class="btn primary">
+                        <span class="btn-text">Join Queue</span>
+                        <span class="btn-icon">➔</span>
+                    </button>
+                </form>
+                <div id="ticket-container" class="ticket-container hidden">
+                    <div class="ticket">
+                        <div class="ticket-header">Your Queue Ticket</div>
+                        <div class="ticket-number" id="ticket-number"></div>
+                        <div class="ticket-details">
+                            <p><strong>Name:</strong> <span id="ticket-name"></span></p>
+                            <p><strong>Service:</strong> <span id="ticket-service"></span></p>
+                            <p><strong>Estimated Wait:</strong> <span id="ticket-wait"></span></p>
+                        </div>
+                        <div class="ticket-footer">Please wait for your number to be called</div>
+                    </div>
+                    <button id="close-ticket" class="btn secondary">Close</button>
+                </div>
+            </section>
+
+            <section class="queue-display card">
+                <div class="now-serving">
+                    <h2><span class="icon">🔔</span> Now Serving</h2>
+                    <div class="current-serving-container">
+                        <div id="current-serving" class="current-serving pulse">No one currently</div>
+                        <div id="current-service-type" class="service-type"></div>
+                    </div>
+                    <div class="controls">
+                        <button id="next-btn" class="btn secondary">
+                            <span class="btn-text">Next</span>
+                            <span class="btn-icon">⏭️</span>
+                        </button>
+                        <button id="call-again-btn" class="btn accent">
+                            <span class="btn-text">Call Again</span>
+                            <span class="btn-icon">🔄</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="waiting-list">
+                    <h2><span class="icon">⏱️</span> Waiting List</h2>
+                    <div class="list-container">
+                        <ul id="queue-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-panel card">
+                <h2><span class="icon">⚙️</span> Admin Panel</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Total Waiting</div>
+                        <div class="stat-value" id="total-waiting">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Avg. Wait Time</div>
+                        <div class="stat-value" id="avg-wait-time">0 min</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Served Today</div>
+                        <div class="stat-value" id="served-today">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Priority Cases</div>
+                        <div class="stat-value" id="priority-count">0</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="queue-chart"></canvas>
+                </div>
+                <div class="admin-controls">
+                    <button id="clear-btn" class="btn danger">
+                        <span class="btn-text">Clear Queue</span>
+                        <span class="btn-icon">🗑️</span>
+                    </button>
+                    <button id="settings-btn" class="btn secondary">
+                        <span class="btn-text">Settings</span>
+                        <span class="btn-icon">⚙️</span>
+                    </button>
+                </div>
+                <div id="settings-panel" class="settings-panel hidden">
+                    <h3>Settings</h3>
+                    <div class="form-group">
+                        <label for="avg-service-time">Average Service Time (minutes)</label>
+                        <input type="number" id="avg-service-time" min="1" value="5">
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="sound-enabled" checked>
+                        <label for="sound-enabled">Enable Sound Notifications</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="auto-next">
+                        <label for="auto-next">Auto-Next after 30 seconds</label>
+                    </div>
+                    <button id="save-settings" class="btn primary">Save Settings</button>
+                </div>
+            </section>
+
+            <section class="display-mode card">
+                <h2><span class="icon">📺</span> Display Mode</h2>
+                <button id="display-mode-btn" class="btn secondary">
+                    <span class="btn-text">Enter Display Mode</span>
+                    <span class="btn-icon">🖥️</span>
+                </button>
+                <p class="hint">Display mode shows only the current serving and next 3 in queue. Perfect for secondary screens in waiting areas.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Smart Queue Management System</p>
+            <p class="version">Version 2.0</p>
+        </footer>
+    </div>
+
+    <div id="display-mode-screen" class="display-mode-screen hidden">
+        <div class="display-header">
+            <h1>Now Serving</h1>
+        </div>
+        <div class="display-current">
+            <div class="display-number" id="display-current-number">--</div>
+            <div class="display-name" id="display-current-name">--</div>
+            <div class="display-service" id="display-current-service">--</div>
+        </div>
+        <div class="display-next">
+            <h2>Coming Up Next</h2>
+            <div class="display-next-list" id="display-next-list"></div>
+        </div>
+        <button id="exit-display-mode" class="btn exit-display">Exit Display Mode</button>
+    </div>
+
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <div class="notification-title">Next Customer</div>
+            <div class="notification-message" id="notification-message"></div>
+        </div>
+    </div>
+
+    <audio id="notification-sound" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAzMzMzMzMzM5mZmZmZmZmZ//////////8=" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
