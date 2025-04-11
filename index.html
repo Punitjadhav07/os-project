@@ -3,192 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Queue Management System</title>
+    <title>Smart Queue Banking System</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="light-mode">
-    <div class="theme-toggle">
-        <input type="checkbox" id="theme-switch" class="theme-switch">
-        <label for="theme-switch" class="theme-switch-label">
-            <span class="theme-switch-icon"></span>
-        </label>
-    </div>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-university"></i>
+            <h1>Smart Queue Banking System</h1>
+        </div>
+        <div class="time-display">
+            <div id="current-time"></div>
+            <div id="current-date"></div>
+        </div>
+    </header>
 
-    <div class="container">
-        <header>
-            <div class="logo">
-                <div class="logo-icon">
-                    <span class="line"></span>
-                    <span class="line"></span>
-                    <span class="line"></span>
-                </div>
-                <h1>Smart Queue</h1>
-            </div>
-            <p class="tagline">Efficient. Organized. Intelligent.</p>
-        </header>
-
-        <main>
-            <section class="user-panel card">
-                <h2><span class="icon">👤</span> Join the Queue</h2>
-                <form id="queue-form">
+    <main>
+        <section class="queue-management">
+            <div class="panel customer-entry">
+                <h2>Customer Entry</h2>
+                <form id="customer-form">
                     <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" placeholder="Enter your name" required>
+                        <label for="customer-name">Customer Name</label>
+                        <input type="text" id="customer-name" placeholder="Enter customer name" required>
                     </div>
                     <div class="form-group">
-                        <label for="service">Service Type</label>
-                        <select id="service" required>
-                            <option value="general">General Inquiry</option>
-                            <option value="deposit">Deposit/Withdrawal</option>
+                        <label for="service-type">Service Type</label>
+                        <select id="service-type" required>
+                            <option value="" disabled selected>Select service</option>
+                            <option value="deposit">Deposit</option>
+                            <option value="withdrawal">Withdrawal</option>
                             <option value="account">Account Services</option>
-                            <option value="loan">Loan Application</option>
+                            <option value="loan">Loan Inquiry</option>
+                            <option value="other">Other Inquiry</option>
                         </select>
                     </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="priority" name="priority">
-                        <label for="priority">Priority Service</label>
-                    </div>
-                    <button type="submit" class="btn primary">
-                        <span class="btn-text">Join Queue</span>
-                        <span class="btn-icon">➔</span>
-                    </button>
-                </form>
-                <div id="ticket-container" class="ticket-container hidden">
-                    <div class="ticket">
-                        <div class="ticket-header">Your Queue Ticket</div>
-                        <div class="ticket-number" id="ticket-number"></div>
-                        <div class="ticket-details">
-                            <p><strong>Name:</strong> <span id="ticket-name"></span></p>
-                            <p><strong>Service:</strong> <span id="ticket-service"></span></p>
-                            <p><strong>Estimated Wait:</strong> <span id="ticket-wait"></span></p>
-                        </div>
-                        <div class="ticket-footer">Please wait for your number to be called</div>
-                    </div>
-                    <button id="close-ticket" class="btn secondary">Close</button>
-                </div>
-            </section>
-
-            <section class="queue-display card">
-                <div class="now-serving">
-                    <h2><span class="icon">🔔</span> Now Serving</h2>
-                    <div class="current-serving-container">
-                        <div id="current-serving" class="current-serving pulse">No one currently</div>
-                        <div id="current-service-type" class="service-type"></div>
-                    </div>
-                    <div class="controls">
-                        <button id="next-btn" class="btn secondary">
-                            <span class="btn-text">Next</span>
-                            <span class="btn-icon">⏭️</span>
-                        </button>
-                        <button id="call-again-btn" class="btn accent">
-                            <span class="btn-text">Call Again</span>
-                            <span class="btn-icon">🔄</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="waiting-list">
-                    <h2><span class="icon">⏱️</span> Waiting List</h2>
-                    <div class="list-container">
-                        <ul id="queue-list"></ul>
-                    </div>
-                </div>
-            </section>
-
-            <section class="admin-panel card">
-                <h2><span class="icon">⚙️</span> Admin Panel</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-title">Total Waiting</div>
-                        <div class="stat-value" id="total-waiting">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title">Avg. Wait Time</div>
-                        <div class="stat-value" id="avg-wait-time">0 min</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title">Served Today</div>
-                        <div class="stat-value" id="served-today">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title">Priority Cases</div>
-                        <div class="stat-value" id="priority-count">0</div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="queue-chart"></canvas>
-                </div>
-                <div class="admin-controls">
-                    <button id="clear-btn" class="btn danger">
-                        <span class="btn-text">Clear Queue</span>
-                        <span class="btn-icon">🗑️</span>
-                    </button>
-                    <button id="settings-btn" class="btn secondary">
-                        <span class="btn-text">Settings</span>
-                        <span class="btn-icon">⚙️</span>
-                    </button>
-                </div>
-                <div id="settings-panel" class="settings-panel hidden">
-                    <h3>Settings</h3>
                     <div class="form-group">
-                        <label for="avg-service-time">Average Service Time (minutes)</label>
-                        <input type="number" id="avg-service-time" min="1" value="5">
+                        <label for="priority-level">Priority Level</label>
+                        <select id="priority-level" required>
+                            <option value="1">Regular</option>
+                            <option value="2">Premium</option>
+                            <option value="3">VIP</option>
+                        </select>
                     </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="sound-enabled" checked>
-                        <label for="sound-enabled">Enable Sound Notifications</label>
+                    <div class="form-group">
+                        <label for="estimated-time">Estimated Service Time (minutes)</label>
+                        <input type="number" id="estimated-time" min="1" max="30" value="5" required>
                     </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="auto-next">
-                        <label for="auto-next">Auto-Next after 30 seconds</label>
+                    <button type="submit" class="btn primary">Add to Queue</button>
+                </form>
+            </div>
+
+            <div class="panel queue-display">
+                <h2>Customer Queue</h2>
+                <div class="queue-controls">
+                    <div class="scheduling-selector">
+                        <label for="scheduling-algorithm">Scheduling Algorithm:</label>
+                        <select id="scheduling-algorithm">
+                            <option value="fcfs">First Come First Served (FCFS)</option>
+                            <option value="sjf">Shortest Job First (SJF)</option>
+                            <option value="priority">Priority Based</option>
+                            <option value="round-robin">Round Robin</option>
+                        </select>
                     </div>
-                    <button id="save-settings" class="btn primary">Save Settings</button>
+                    <div class="time-quantum-control" id="time-quantum-container" style="display: none;">
+                        <label for="time-quantum">Time Quantum (minutes):</label>
+                        <input type="number" id="time-quantum" min="1" max="10" value="2">
+                    </div>
                 </div>
-            </section>
+                <div class="queue-list-container">
+                    <h3>Waiting Queue</h3>
+                    <div id="waiting-queue" class="queue-list">
+                        <!-- Waiting customers will be displayed here -->
+                        <div class="empty-queue-message">No customers in queue</div>
+                    </div>
+                </div>
+            </div>
 
-            <section class="display-mode card">
-                <h2><span class="icon">📺</span> Display Mode</h2>
-                <button id="display-mode-btn" class="btn secondary">
-                    <span class="btn-text">Enter Display Mode</span>
-                    <span class="btn-icon">🖥️</span>
-                </button>
-                <p class="hint">Display mode shows only the current serving and next 3 in queue. Perfect for secondary screens in waiting areas.</p>
-            </section>
-        </main>
+            <div class="panel service-counters">
+                <h2>Service Counters</h2>
+                <div class="counter-controls">
+                    <label for="counter-count">Number of Active Counters:</label>
+                    <input type="number" id="counter-count" min="1" max="5" value="3">
+                    <button id="update-counters" class="btn secondary">Update</button>
+                </div>
+                <div id="counters-container">
+                    <!-- Service counters will be displayed here -->
+                </div>
+                <div class="service-actions">
+                    <button id="start-service" class="btn primary">Start Service</button>
+                    <button id="pause-service" class="btn secondary">Pause</button>
+                    <button id="reset-service" class="btn danger">Reset All</button>
+                </div>
+            </div>
+        </section>
 
-        <footer>
-            <p>&copy; 2025 Smart Queue Management System</p>
-            <p class="version">Version 2.0</p>
-        </footer>
-    </div>
+        <section class="visualization-section">
+            <h2>Process Scheduling Visualization</h2>
+            <div class="visualization-container">
+                <div class="visualization-header">
+                    <div class="stats-panel">
+                        <div class="stat-item">
+                            <span class="stat-label">Average Wait Time:</span>
+                            <span id="avg-wait-time" class="stat-value">0 min</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Average Turnaround Time:</span>
+                            <span id="avg-turnaround-time" class="stat-value">0 min</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Customers Served:</span>
+                            <span id="customers-served" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Customers Waiting:</span>
+                            <span id="customers-waiting" class="stat-value">0</span>
+                        </div>
+                    </div>
+                    <div class="timeline-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #4CAF50;"></div>
+                            <span>Processing</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #FFC107;"></div>
+                            <span>Waiting</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #2196F3;"></div>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gantt-chart-container">
+                    <div class="time-axis" id="time-axis">
+                        <!-- Time axis will be generated here -->
+                    </div>
+                    <div id="gantt-chart" class="gantt-chart">
+                        <!-- Gantt chart will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div id="display-mode-screen" class="display-mode-screen hidden">
-        <div class="display-header">
-            <h1>Now Serving</h1>
-        </div>
-        <div class="display-current">
-            <div class="display-number" id="display-current-number">--</div>
-            <div class="display-name" id="display-current-name">--</div>
-            <div class="display-service" id="display-current-service">--</div>
-        </div>
-        <div class="display-next">
-            <h2>Coming Up Next</h2>
-            <div class="display-next-list" id="display-next-list"></div>
-        </div>
-        <button id="exit-display-mode" class="btn exit-display">Exit Display Mode</button>
-    </div>
+        <section class="info-section">
+            <h2>Process Scheduling in Banking Systems</h2>
+            <div class="info-container">
+                <div class="info-panel">
+                    <h3>What is Process Scheduling?</h3>
+                    <p>Process scheduling is the method by which work is assigned to resources that complete the work. In a banking system, this refers to how customers are assigned to service counters based on various factors like arrival time, service type, and priority.</p>
+                </div>
+                
+                <div class="info-tabs">
+                    <div class="tab-headers">
+                        <button class="tab-btn active" data-tab="fcfs">FCFS</button>
+                        <button class="tab-btn" data-tab="sjf">SJF</button>
+                        <button class="tab-btn" data-tab="priority">Priority</button>
+                        <button class="tab-btn" data-tab="round-robin">Round Robin</button>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="fcfs-tab">
+                            <h3>First Come First Served (FCFS)</h3>
+                            <p>The simplest scheduling algorithm where customers are served in the order they arrive. This is the traditional queue system used in many banks.</p>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Simple to implement and understand</li>
+                                <li>Fair in terms of arrival time</li>
+                                <li>No complex calculations needed</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Can lead to long wait times if a customer with a lengthy transaction is ahead</li>
+                                <li>Does not consider transaction complexity or customer priority</li>
+                                <li>May not be optimal for overall system efficiency</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="sjf-tab">
+                            <h3>Shortest Job First (SJF)</h3>
+                            <p>Prioritizes customers with shorter estimated service times. In banking, this would mean serving customers with simpler transactions first.</p>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Minimizes average waiting time for all customers</li>
+                                <li>Increases overall system throughput</li>
+                                <li>More customers can be served in less time</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Customers with complex transactions may wait indefinitely (starvation)</li>
+                                <li>Requires estimating service time in advance</li>
+                                <li>May seem unfair to customers with longer transactions</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="priority-tab">
+                            <h3>Priority Based Scheduling</h3>
+                            <p>Serves customers based on their priority level. In banking, this could be based on account type (regular, premium, VIP) or special circumstances.</p>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Allows for business rules to determine service order</li>
+                                <li>Can prioritize high-value customers or urgent transactions</li>
+                                <li>Flexible to accommodate different business needs</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Lower priority customers may experience very long waits</li>
+                                <li>Can lead to customer dissatisfaction if priorities aren't transparent</li>
+                                <li>May require additional staff to manage priority assignments</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="round-robin-tab">
+                            <h3>Round Robin Scheduling</h3>
+                            <p>Allocates a fixed time slice (quantum) to each customer in a cyclic manner. In banking, this could mean serving each customer for a limited time before moving to the next.</p>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Ensures fairness by giving each customer some service time</li>
+                                <li>Prevents any single customer from monopolizing a service counter</li>
+                                <li>Good for handling a mix of short and long transactions</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Transactions may be interrupted and resumed multiple times</li>
+                                <li>Overhead of switching between customers</li>
+                                <li>Determining optimal time quantum can be challenging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-panel">
+                    <h3>Real-world Banking Applications</h3>
+                    <p>Modern banks often use hybrid scheduling algorithms that combine elements of multiple approaches. For example:</p>
+                    <ul>
+                        <li>Express counters for simple transactions (SJF principle)</li>
+                        <li>Priority queues for premium customers (Priority scheduling)</li>
+                        <li>General service queues (FCFS principle)</li>
+                        <li>Time limits on complex transactions to prevent excessive waits (Round Robin concept)</li>
+                    </ul>
+                    <p>Digital queue management systems help banks optimize customer flow, reduce wait times, and improve overall customer satisfaction while making efficient use of staff resources.</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <div id="notification" class="notification">
-        <div class="notification-content">
-            <div class="notification-title">Next Customer</div>
-            <div class="notification-message" id="notification-message"></div>
-        </div>
-    </div>
-
-    <audio id="notification-sound" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAzMzMzMzMzM5mZmZmZmZmZ//////////8=" preload="auto"></audio>
+    <footer>
+        <p>&copy; 2023 Smart Queue Banking System | Operating Systems Project</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
-
