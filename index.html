@@ -3,278 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Queue Banking System</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <title>Medical Pathway using Generative AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light background */
+            color: #374151; /* Darker text for better contrast */
+        }
+        .container {
+            max-width: 800px; /* Increased max-width for larger screens */
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+        }
+        .logo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .logo-header img {
+            width: 120px; /* Increased logo size */
+            height: auto;
+        }
+        .logo-header div {
+            text-align: right;
+        }
+        .section-title {
+            font-size: 1.875rem; /* Larger heading */
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: #1e293b; /* Darker heading color */
+        }
+        .subsection-title {
+            font-size: 1.25rem; /* Larger subheading */
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: #4b5563;
+        }
+        .text-content {
+            line-height: 1.75; /* Increased line height for better readability */
+            margin-bottom: 1rem;
+            color: #4b5563;
+        }
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .flow-container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between; /* Space out the blocks */
+            }
+        }
+        .block {
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e0e6ed; /* Lighter border */
+            background-color: #f7fafc; /* Very light background */
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow */
+            margin-bottom: 1rem;
+            text-align: center;
+            min-width: 220px; /* Increased width of blocks */
+        }
+        .block p {
+            font-weight: 500; /* Medium font weight for block text */
+            color: #1f2937; /* Darker text in blocks */
+        }
+        .arrow {
+            margin: 0 1rem;
+            display: flex;
+            align-items: center;
+            color: #9ca3af; /* Muted arrow color */
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+            }
+        }
+        .grid-item {
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            background-color: #f7fafc;
+            border: 1px solid #e0e6ed;
+             box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e6ed;
+            color: #4b5563;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Smart Queue Banking System</h1>
-            <nav>
-                <ul>
-                    <li><a href="#queue-management">Queue Management</a></li>
-                    <li><a href="#process-visualization">Process Visualization</a></li>
-                    <li><a href="#customer-inquiry">Customer Inquiry</a></li>
-                    <li><a href="#information">Information</a></li>
-                </ul>
-            </nav>
+<body class="bg-gray-100">
+    <div class="container">
+        <div class="logo-header">
+            <img src="VIT_logo.png" alt="VIT Logo">
+            <div>
+                <p class="text-sm text-gray-600">Vidyalankar Institute of Technology</p>
+                <p class="text-sm text-gray-600">Accredited A+ by NAAC</p>
+            </div>
         </div>
-    </header>
 
-    <main>
-        <section id="queue-management" class="container">
-            <h2>Queue Management</h2>
-            <div class="card">
-                <div class="form-group">
-                    <label for="customer-name">Customer Name:</label>
-                    <input type="text" id="customer-name" placeholder="Enter customer name">
-                </div>
-                <div class="form-group">
-                    <label for="service-type">Service Type:</label>
-                    <select id="service-type">
-                        <option value="deposit">Deposit</option>
-                        <option value="withdrawal">Withdrawal</option>
-                        <option value="transfer">Transfer</option>
-                        <option value="loan">Loan Application</option>
-                        <option value="account">Account Opening</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="priority">Priority Level:</label>
-                    <select id="priority">
-                        <option value="1">Normal</option>
-                        <option value="2">Premium</option>
-                        <option value="3">VIP</option>
-                    </select>
-                </div>
-                <button id="add-customer" class="btn primary">Add to Queue</button>
+        <h1 class="section-title">Medical Pathway using Generative AI</h1>
+
+        <h2 class="subsection-title">Problem Definition</h2>
+        <p class="text-content">
+            India's healthcare sector faces challenges in real-time decision-making, supply chain
+            inefficiencies, and uneven resource distribution.
+        </p>
+
+        <h2 class="subsection-title">Objective</h2>
+        <p class="text-content">
+            Build an AI-powered assistant using Generative AI (Gemini) to provide intelligent,
+            state-wise recommendations for medical resource allocation and infrastructure planning.
+        </p>
+
+        <h2 class="subsection-title">System Diagram / Flow (Block Diagram)</h2>
+        <div class="flow-container">
+            <div class="block">
+                <p class="font-semibold">1. User Query (Healthcare Staff)</p>
             </div>
-
-            <div class="queue-status">
-                <div class="status-card">
-                    <h3>Currently Serving</h3>
-                    <div id="current-customer" class="current-customer">
-                        <p>No customer being served</p>
-                    </div>
-                    <button id="next-customer" class="btn secondary">Next Customer</button>
-                </div>
-                <div class="status-card">
-                    <h3>Queue Status</h3>
-                    <div class="queue-stats">
-                        <div class="stat">
-                            <span class="stat-value" id="queue-length">0</span>
-                            <span class="stat-label">In Queue</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value" id="avg-wait-time">0</span>
-                            <span class="stat-label">Avg. Wait (min)</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value" id="served-today">0</span>
-                            <span class="stat-label">Served Today</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
             </div>
-
-            <div class="queue-list-container">
-                <h3>Waiting Customers</h3>
-                <div id="queue-list" class="queue-list">
-                    <!-- Queue items will be added here dynamically -->
-                </div>
+            <div class="block">
+                <p class="font-semibold">2. NLP Module (Gemini AI)</p>
             </div>
-        </section>
-
-        <section id="process-visualization" class="container">
-            <h2>Process Scheduling Visualization</h2>
-            <div class="visualization-container">
-                <div class="visualization-controls">
-                    <button id="start-visualization" class="btn primary">Start Simulation</button>
-                    <button id="pause-visualization" class="btn secondary">Pause</button>
-                    <button id="reset-visualization" class="btn secondary">Reset</button>
-                    <div class="speed-control">
-                        <label for="simulation-speed">Speed:</label>
-                        <input type="range" id="simulation-speed" min="1" max="10" value="5">
-                    </div>
-                </div>
-                <div class="visualization-area">
-                    <div class="process-stages">
-                        <div class="stage" id="stage-arrival">
-                            <h4>Arrival</h4>
-                            <div class="stage-content"></div>
-                        </div>
-                        <div class="stage" id="stage-waiting">
-                            <h4>Waiting Queue</h4>
-                            <div class="stage-content"></div>
-                        </div>
-                        <div class="stage" id="stage-processing">
-                            <h4>Processing</h4>
-                            <div class="stage-content"></div>
-                        </div>
-                        <div class="stage" id="stage-completed">
-                            <h4>Completed</h4>
-                            <div class="stage-content"></div>
-                        </div>
-                    </div>
-                    <div class="visualization-metrics">
-                        <div class="metric">
-                            <span class="metric-label">Average Turnaround Time:</span>
-                            <span class="metric-value" id="avg-turnaround">0 min</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Average Response Time:</span>
-                            <span class="metric-value" id="avg-response">0 min</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Throughput:</span>
-                            <span class="metric-value" id="throughput">0 customers/hour</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="visualization-legend">
-                    <div class="legend-item">
-                        <div class="legend-color normal"></div>
-                        <span>Normal Priority</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color premium"></div>
-                        <span>Premium Priority</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color vip"></div>
-                        <span>VIP Priority</span>
-                    </div>
-                </div>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
             </div>
-        </section>
-
-        <section id="customer-inquiry" class="container">
-            <h2>Customer Inquiry Queue (FIFO)</h2>
-            <div class="card">
-                <div class="form-group">
-                    <label for="inquiry-name">Customer Name:</label>
-                    <input type="text" id="inquiry-name" placeholder="Enter customer name">
-                </div>
-                <div class="form-group">
-                    <label for="inquiry-type">Inquiry Type:</label>
-                    <select id="inquiry-type">
-                        <option value="account">Account Information</option>
-                        <option value="statement">Statement Request</option>
-                        <option value="complaint">Complaint</option>
-                        <option value="general">General Inquiry</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inquiry-details">Details:</label>
-                    <textarea id="inquiry-details" placeholder="Enter inquiry details"></textarea>
-                </div>
-                <button id="add-inquiry" class="btn primary">Add Inquiry</button>
+            <div class="block">
+                <p class="font-semibold">3. Backend (Data + Algorithms)</p>
             </div>
-
-            <div class="inquiry-queue-container">
-                <h3>Inquiry Queue</h3>
-                <div class="inquiry-stats">
-                    <div class="stat">
-                        <span class="stat-value" id="inquiry-count">0</span>
-                        <span class="stat-label">Pending Inquiries</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value" id="resolved-count">0</span>
-                        <span class="stat-label">Resolved Today</span>
-                    </div>
-                </div>
-                <div id="inquiry-list" class="inquiry-list">
-                    <!-- Inquiry items will be added here dynamically -->
-                </div>
-                <button id="resolve-inquiry" class="btn secondary">Resolve Next Inquiry</button>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
             </div>
-        </section>
-
-        <section id="information" class="container">
-            <h2>Process Scheduling Information</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>First-Come, First-Served (FCFS)</h3>
-                    <p>The simplest scheduling algorithm where processes are executed in the order they arrive in the queue. It's fair but can lead to the "convoy effect" where short processes wait behind long ones.</p>
-                    <div class="info-visual fcfs-visual">
-                        <div class="process p1">P1</div>
-                        <div class="process p2">P2</div>
-                        <div class="process p3">P3</div>
-                        <div class="timeline"></div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <h3>Priority Scheduling</h3>
-                    <p>Processes are executed based on priority levels. Higher priority processes are executed first. Can lead to starvation of lower priority processes if not implemented with aging.</p>
-                    <div class="info-visual priority-visual">
-                        <div class="process p3 high">P3 (High)</div>
-                        <div class="process p1 medium">P1 (Medium)</div>
-                        <div class="process p2 low">P2 (Low)</div>
-                        <div class="timeline"></div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <h3>Round Robin (RR)</h3>
-                    <p>Each process gets a small unit of CPU time (time quantum), and if not completed, it returns to the queue. This ensures fair CPU distribution and good response time.</p>
-                    <div class="info-visual rr-visual">
-                        <div class="process p1">P1</div>
-                        <div class="process p2">P2</div>
-                        <div class="process p1">P1</div>
-                        <div class="process p3">P3</div>
-                        <div class="process p2">P2</div>
-                        <div class="timeline"></div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <h3>Shortest Job First (SJF)</h3>
-                    <p>Processes with the shortest execution time are executed first. Optimal for minimizing average waiting time but requires knowing process execution time in advance.</p>
-                    <div class="info-visual sjf-visual">
-                        <div class="process p2">P2 (2min)</div>
-                        <div class="process p3">P3 (3min)</div>
-                        <div class="process p1">P1 (5min)</div>
-                        <div class="timeline"></div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <h3>Multilevel Queue</h3>
-                    <p>Processes are permanently assigned to different queues with different priorities. Each queue has its own scheduling algorithm. Used for different types of processes.</p>
-                    <div class="info-visual mlq-visual">
-                        <div class="queue-level">
-                            <span>System Processes</span>
-                            <div class="process p1">P1</div>
-                        </div>
-                        <div class="queue-level">
-                            <span>Interactive Processes</span>
-                            <div class="process p2">P2</div>
-                            <div class="process p4">P4</div>
-                        </div>
-                        <div class="queue-level">
-                            <span>Batch Processes</span>
-                            <div class="process p3">P3</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <h3>Key Performance Metrics</h3>
-                    <ul class="metrics-list">
-                        <li><strong>Turnaround Time:</strong> Total time from submission to completion</li>
-                        <li><strong>Waiting Time:</strong> Time spent waiting in the ready queue</li>
-                        <li><strong>Response Time:</strong> Time from submission until the first response</li>
-                        <li><strong>Throughput:</strong> Number of processes completed per unit time</li>
-                        <li><strong>CPU Utilization:</strong> Percentage of time CPU is busy</li>
-                    </ul>
-                </div>
+            <div class="block">
+                <p class="font-semibold">Recommendation Output (Streamlit UI)</p>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Smart Queue Banking System</p>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
+        <h2 class="subsection-title">System Block Flow Diagram</h2>
+        <div class="flow-container">
+             <div class="block">
+                <p class="font-semibold">User Query (Healthcare Staff)</p>
+            </div>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
+            </div>
+            <div class="block">
+                <p class="font-semibold">NLP Module (Gemini AI)</p>
+            </div>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
+            </div>
+            <div class="block">
+                <p class="font-semibold">Backend (Data + Algorithms)</p>
+            </div>
+            <div class="arrow">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
+            </div>
+            <div class="block">
+                <p class="font-semibold">Recommendation Output (Streamlit UI)</p>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <h3 class="subsection-title">Assumptions</h3>
+                <p class="text-content">
+                    The implementation of this system assumes access to accurate healthcare datasets,
+                    including regional population density, hospital coverage, and existing resource
+                    stock. Additionally, it assumes the presence of a minimal cloud infrastructure capable of
+                    supporting AI queries, and basic digital literacy among healthcare workers who will
+                    interact with the system. Lastly, it is expected that administrative support and
+                    policy alignment will be available for real-world integration.
+                </p>
+            </div>
+            <div class="grid-item">
+                <h3 class="subsection-title">Future Scope</h3>
+                <p class="text-content">
+                    Future enhancements of the system may include regional language support for
+                    improved accessibility in rural India. It also opens up possibilities for integration
+                    with national healthcare systems such as Aarogya Setu or Ayushman Bharat.
+                    Another direction is the development of hospital-specific dashboards that visualize
+                    resource metrics and supply chain KPIs.
+                    Over time, the model can evolve to provide patient-specific treatment
+                    pathways, transforming into a holistic diagnostic and recommendation assistant
+                    for front-line medical professionals.
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Department of Information Technology</p>
+        </div>
+    </div>
 </body>
 </html>
